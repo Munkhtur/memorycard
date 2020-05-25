@@ -65,7 +65,7 @@ function createCard(data, i) {
       const id = e.target.parentElement.dataset.id;
       if (confirm('Are you sure?')) {
         http
-          .delete(`http://localhost:8000/api/cards/${id}`, token)
+          .delete(`/api/cards/${id}`, token)
           .then((data) => {
             if (!data.error) {
               const cards = JSON.parse(localStorage.getItem('cards'));
@@ -101,7 +101,7 @@ function getCardsLocal() {
 function getCardsData() {
   // const cards = JSON.parse(localStorage.getItem('cards'));
   try {
-    const cards = http.get('http://localhost:8000/api/cards').then((data) => {
+    const cards = http.get('/api/cards').then((data) => {
       setCardsData(data);
     });
     return cards === null ? [] : cards;
@@ -199,7 +199,7 @@ addCardBtn.addEventListener('click', () => {
     setCardsData(cardData);
     try {
       http
-        .post('http://localhost:8000/api/cards', newCard, token)
+        .post('/api/cards', newCard, token)
         .then((data) => showAlert('New Card Added', 'alert success'));
     } catch (error) {
       console.log(error);
@@ -283,7 +283,7 @@ signUpBtn.addEventListener('click', async (e) => {
     user.username = username;
     user.password = password;
     try {
-      http.post('http://localhost:8000/api/users', user).then((data) => {
+      http.post('/api/users', user).then((data) => {
         addContainer.classList.add('show');
         openModal.style.display = 'none';
         showBtn.style.display = 'block';
@@ -314,7 +314,7 @@ signInBtn.addEventListener('click', (e) => {
   const user = { username, password };
   checkRequired([userNameIn, userPasswordin]);
   try {
-    http.post('http://localhost:8000/api/login', user).then((data) => {
+    http.post('/api/login', user).then((data) => {
       console.log(data);
       if (!data.error) {
         setUser(data);
